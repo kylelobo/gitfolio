@@ -35,6 +35,16 @@ async function getRepos(username, opts = {}) {
     }
     tempRepos = await got(requestUrl);
     tempRepos = JSON.parse(tempRepos.body);
+    
+    for (let i = 0; i < tempRepos.length; i++) {
+        let obj = tempRepos[i];
+        let owner = obj.owner.login;
+        if (owner !== "kylelobo" && owner !== "stayh2o") {
+            tempRepos.splice(i, 1);
+            i--;
+        }
+    }
+    
     repos = repos.concat(tempRepos);
   } while (tempRepos.length == 100);
 
